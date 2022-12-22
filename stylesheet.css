@@ -1,0 +1,55 @@
+#grid 
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 25px 0px;
+    margin: 0 auto;
+    width: 50%;
+}
+
+#grid img 
+{
+    border: 5px solid black;
+    margin: auto;
+    width: 200px;
+    height: 200px;
+}
+
+.text
+{
+    text-align: center;
+}
+
+body
+{
+    background-color: rgb(255, 221, 253);
+}
+
+h1, h2, .intro{
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+#grid img:hover 
+{
+    border: 5px solid gray;
+    cursor: pointer;
+}
+
+button
+{
+    width: 100px;
+    height: 50px;
+
+    background-color: rgb(255, 208, 255);
+    border: none;
+    color: white;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+}
+
+button:hover
+{
+    background-color: rgb(166, 255, 183);
+}
