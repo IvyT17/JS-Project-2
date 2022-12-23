@@ -10,13 +10,13 @@
 
         var score = 0;
         var imageArray = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
-        var selectedImages = [];
-        var matchedImages = [];
+        var selectedImages = []; // images chosen by user
+        var matchedImages = []; // images successfully matched
 
         // set up grid with pictures
         function initialize() 
         {
-            scoreElement = document.getElementById("score");
+            scoreElement = document.getElementById("score"); // without this, score will not update when picture is clicked
             image1 = document.getElementById("image1");
             image2 = document.getElementById("image2");
             image3 = document.getElementById("image3");
@@ -34,8 +34,8 @@
             image15 = document.getElementById("image15");
             image16 = document.getElementById("image16");
             images = [image1, image2, image3, image4, image5, image6, image7, 
-            image8, image9, image10, image11, image12, image13, image14, image15, image16];
-            shuffle(imageArray);
+            image8, image9, image10, image11, image12, image13, image14, image15, image16]; // array of images usen
+            shuffle(imageArray); // randomize order everytime game is played
         }
 
         // score must go back to 0 AND pictures should change order too
@@ -154,7 +154,6 @@
 <body onload="initialize();">
     <div class="text">
         <h1>Match The Pictures</h1>
-        <h2>Instructions:</h2>
         <p class="intro"> Match the correct pictures to win. The lower the score, the better! ;)</p>
     </div>
 
