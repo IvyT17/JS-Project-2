@@ -7,11 +7,13 @@
     <title>Document</title>
     <link rel="stylesheet" href="stylesheet.css">
     <script>
+
         var score = 0;
         var imageArray = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
         var selectedImages = [];
         var matchedImages = [];
 
+        // set up grid with pictures
         function initialize() 
         {
             scoreElement = document.getElementById("score");
@@ -31,32 +33,39 @@
             image14 = document.getElementById("image14");
             image15 = document.getElementById("image15");
             image16 = document.getElementById("image16");
-            images = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13, image14, image15, image16];
+            images = [image1, image2, image3, image4, image5, image6, image7, 
+            image8, image9, image10, image11, image12, image13, image14, image15, image16];
             shuffle(imageArray);
         }
 
+        // score must go back to 0 AND pictures should change order too
         function resetScore() 
         {
             score = 0;
             matchedImages.length = 0;
+
             for (let i = 0; i < 16; i++) 
             {
                 let value2 = "selectCard(" + i + ");";
+
                 if (!matchedImages.includes(i)) 
                 {
                     images[i].setAttribute("onclick", value2);
                 }
             }
+
             for (let i = 0; i < 16; i++) 
             {
                 images[i].src="images/questionmark.png";
             }
+
             if (selectedImages.length == 1) 
             {
                 let value = "selectCard(" + selectedImages[0] + ");";
                 images[selectedImages[0]].setAttribute("onclick", value);
                 selectedImages.length = 0;
             }
+
             shuffle(imageArray);
             display();
         } 
@@ -75,14 +84,17 @@
                     matchedImages.push(index);
                     selectedImages.pop();
                 } 
+
                 else 
                 {
                     let imageSource = "images/" + imageArray[index] + ".png";
                     images[index].src=imageSource;
+
                     for (let i = 0; i < 16; i++) 
                     {
                         images[i].removeAttribute("onclick");
                     }
+
                     setTimeout(() =>
                     {
                         console.log(selectedImages);
@@ -92,6 +104,7 @@
                         images[selectedImages[0]].setAttribute("onclick", value);
                         value = "selectCard(" + index + ");";
                         images[index].setAttribute("onclick", value);
+
                         for (let i = 0; i < 16; i++) 
                         {
                             let value2 = "selectCard(" + i + ");";
@@ -105,6 +118,7 @@
                 }
                 score++;
             }
+
             else 
             {
                 selectedImages.push(index);
@@ -113,13 +127,15 @@
                 images[index].removeAttribute("onclick");
                 score++;
             }
+
             display();
         }
 
 
         function shuffle(array) 
         {
-            let currentIndex = array.length,  randomIndex;
+            let currentIndex = array.length, randomIndex;
+
             while (currentIndex != 0) 
             {
                 randomIndex = Math.floor(Math.random() * currentIndex);
@@ -132,16 +148,14 @@
         {
             scoreElement.innerHTML = "Your Score: " + score;
         }
-</script>
+    </script>
 </head>
 
 <body onload="initialize();">
     <div class="text">
-        <h1>Match Game</h1>
+        <h1>Match The Pictures</h1>
         <h2>Instructions:</h2>
-        <p class="intro">
-            Match the pictures to win!
-        </p>
+        <p class="intro"> Match the correct pictures to win. The lower the score, the better! ;)</p>
     </div>
 
     <div id="grid">

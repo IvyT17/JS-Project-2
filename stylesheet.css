@@ -1,55 +1,56 @@
-#grid 
+#grid /* remember to use percentages in order to adjust to mobile size */
 {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    grid-gap: 25px 0px;
-    margin: 0 auto;
+    grid-template-columns: repeat(4, 30%);
+    grid-template-rows: repeat(4, 30%);
+    grid-gap: 15px 15px;
+    margin-left: 19%;
     width: 50%;
 }
 
-#grid img 
+#grid img /* this also needs to be mobile friendly */
 {
-    border: 5px solid black;
+    border: 5px solid rgb(111, 50, 255);
     margin: auto;
-    width: 200px;
-    height: 200px;
+    width: 90%;
+    height: 80%;
 }
 
 .text
 {
     text-align: center;
+    width: 100%
 }
 
 body
 {
-    background-color: rgb(255, 221, 253);
+    background-color: rgb(219, 206, 255);
 }
 
-h1, h2, .intro{
+h1, h2, .intro
+{
     font-family: Arial, Helvetica, sans-serif;
 
 }
 
 #grid img:hover 
 {
-    border: 5px solid gray;
+    border: 5px solid rgb(123, 148, 255);
     cursor: pointer;
 }
 
 button
 {
-    width: 100px;
+    width: 10%;
     height: 50px;
-
-    background-color: rgb(255, 208, 255);
+    background-color: rgb(149, 123, 255);
     border: none;
     color: white;
-    border-radius: 5px;
-    transition-duration: 0.4s;
+    border-radius: 10px;
+    transition-duration: 0.5s;
 }
 
 button:hover
 {
-    background-color: rgb(166, 255, 183);
+    background-color: rgb(212, 166, 255);
 }
