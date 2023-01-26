@@ -1,3 +1,9 @@
+<!--
+    Ivy Tang
+    Web Dev
+    Odd Days Period 7/8
+    Level 2 Match Game
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,113 +40,157 @@
             image15 = document.getElementById("image15");
             image16 = document.getElementById("image16");
             images = [image1, image2, image3, image4, image5, image6, image7, 
-            image8, image9, image10, image11, image12, image13, image14, image15, image16]; // array of images usen
+            image8, image9, image10, image11, image12, image13, image14, image15, image16]; // array of images used
             shuffle(imageArray); // randomize order everytime game is played
         }
 
         // score must go back to 0 AND pictures should change order too
         function resetScore() 
         {
+            // set score to 0
             score = 0;
-            matchedImages.length = 0;
+            
+            // clear list of matched images
+            matchedImages = [];
 
             for (let i = 0; i < 16; i++) 
             {
-                let value2 = "selectCard(" + i + ");";
-
-                if (!matchedImages.includes(i)) 
-                {
-                    images[i].setAttribute("onclick", value2);
+                // If the image hasn't been matched yet
+                if (!matchedImages.includes(i)) {
+                // select card
+                images[i].onclick = function() {
+                    selectCard(i);
+                };
                 }
             }
 
+            // question mark image before flip
             for (let i = 0; i < 16; i++) 
             {
-                images[i].src="images/questionmark.png";
+                images[i].src = "images/questionmark.png";
             }
 
             if (selectedImages.length == 1) 
             {
-                let value = "selectCard(" + selectedImages[0] + ");";
-                images[selectedImages[0]].setAttribute("onclick", value);
-                selectedImages.length = 0;
+                // select card
+                images[selectedImages[0]].onclick = function() 
+                {
+                    selectCard(selectedImages[0]);
+                };
+                // clear list of selected images
+                selectedImages = [];
             }
 
+            // shuffle
             shuffle(imageArray);
-            display();
-        } 
-
-        function selectCard(index) 
-        {
-            if (selectedImages.length == 1)
-            {
-                if (imageArray[index] == imageArray[selectedImages[0]]) 
-                {
-                    images[selectedImages[0]].removeAttribute("onclick");
-                    images[index].removeAttribute("onclick");
-                    let imageSource = "images/" + imageArray[index] + ".png";
-                    images[index].src=imageSource;
-                    matchedImages.push(selectedImages[0]);
-                    matchedImages.push(index);
-                    selectedImages.pop();
-                } 
-
-                else 
-                {
-                    let imageSource = "images/" + imageArray[index] + ".png";
-                    images[index].src=imageSource;
-
-                    for (let i = 0; i < 16; i++) 
-                    {
-                        images[i].removeAttribute("onclick");
-                    }
-
-                    setTimeout(() =>
-                    {
-                        console.log(selectedImages);
-                        images[selectedImages[0]].src="images/questionmark.png";
-                        images[index].src="images/questionmark.png";
-                        let value = "selectCard(" + selectedImages[0] + ");";
-                        images[selectedImages[0]].setAttribute("onclick", value);
-                        value = "selectCard(" + index + ");";
-                        images[index].setAttribute("onclick", value);
-
-                        for (let i = 0; i < 16; i++) 
-                        {
-                            let value2 = "selectCard(" + i + ");";
-                            if (!matchedImages.includes(i)) 
-                            {
-                                images[i].setAttribute("onclick", value2);
-                            }
-                        }
-                        selectedImages.pop();
-                    }, 1000 );
-                }
-                score++;
-            }
-
-            else 
-            {
-                selectedImages.push(index);
-                let imageSource = "images/" + imageArray[index] + ".png";
-                images[index].src = imageSource;
-                images[index].removeAttribute("onclick");
-                score++;
-            }
-
+            // show shuffled images
             display();
         }
 
 
+        function selectCard(index) 
+        {
+            // if a card is already selected
+            if (selectedImages.length == 1) 
+            {
+                // if second card matches first card
+                if (imageArray[index] == imageArray[selectedImages[0]]) 
+                {
+                    // matched cards cannot be clicked anymore
+                    images[selectedImages[0]].onclick = null;
+                    images[index].onclick = null;
+
+                    // set image of matched cards
+                    let imageSource = "images/" + imageArray[index] + ".png";
+                    images[index].src = imageSource;
+
+                    // add matched cards list of matched images
+                    matchedImages.push(selectedImages[0]);
+                    matchedImages.push(index);
+
+                    // remove already selected card from list
+                    selectedImages.pop();
+                } 
+                else 
+                {
+                    // set image of selected card
+                    let imageSource = "images/" + imageArray[index] + ".png";
+                    images[index].src = imageSource;
+
+                    // cards cannot be clicked anymore
+                    for (let i = 0; i < 16; i++) 
+                    {
+                        images[i].onclick = null;
+                    }
+
+                    // 1 second pause and then changes image of selected cards back to a question mark
+                    setTimeout(() => 
+                    {
+                        console.log(selectedImages);
+                        images[selectedImages[0]].src = "images/questionmark.png";
+                        images[index].src = "images/questionmark.png";
+
+                        // unmatched cards can be clicked (user retry)
+                        images[selectedImages[0]].onclick = function() 
+                        {
+                        selectCard(selectedImages[0]);
+                        };
+                        images[index].onclick = function() 
+                        {
+                            selectCard(index);
+                        };
+
+                        // unmatched cards can be clicked (user retry)
+                        for (let i = 0; i < 16; i++) 
+                        {
+                            if (!matchedImages.includes(i)) 
+                            {
+                                images[i].onclick = function() 
+                                {
+                                selectCard(i);
+                                };
+                            }
+                        }
+                        selectedImages.pop();
+                    }, 1000);
+                }
+                // score goes up
+                score++;
+            } 
+            else 
+            {
+                // add selected card to list of selected images
+                selectedImages.push(index);
+
+                // set image of selected card to this
+                let imageSource = "images/" + imageArray[index] + ".png";
+                images[index].src = imageSource;
+
+                // selected card cannot be clicked anymore
+                images[index].onclick = null;
+
+                // score goes up
+                score++;
+            }
+            display();
+        }
+
         function shuffle(array) 
         {
-            let currentIndex = array.length, randomIndex;
+            // set index to last element of array
+            let index = array.length;
 
-            while (currentIndex != 0) 
+            // there are still cards to be flipped
+            while (index != 0) 
             {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
-                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+                // random index
+                let random = Math.floor(Math.random() * index);
+                // index goes down by 1
+                index--;
+                // switch current with random
+                let temp = array[index];
+                array[index] = array[random];
+                array[random] = temp;
             }
         }
 
