@@ -50,11 +50,13 @@
             for (let i = 0; i < 16; i++) 
             {
                 // If the image hasn't been matched yet
-                if (!matchedImages.includes(i)) {
-                // select card
-                images[i].onclick = function() {
-                    selectCard(i);
-                };
+                if (!matchedImages.includes(i)) 
+                {
+                    // select card
+                    images[i].onclick = function() 
+                    {
+                        selectCard(i);
+                    };
                 }
             }
 
